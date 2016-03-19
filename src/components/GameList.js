@@ -50,7 +50,7 @@ export default class GameList extends React.Component {
     sessionRef.set(sessionValue);
 
     // Go to the game page
-    window.location.hash = 'game?eventId=' + eventId + '&name=' + this.state.name;
+    window.location.hash = 'game?eventId=' + eventId + '&name=' + this.state.name + '&code=' + sessionCode ;
   }
 
   render() {
@@ -69,16 +69,12 @@ export default class GameList extends React.Component {
           this.state.games.getIn(['league', 'games']).map((game) => {
             if (game.get('status') === 'canceled') { return null; }
             return (
-              <div>
-                <Link to="/game?tobeadded=true"
-                  onClick={()=>this.handleSelectedGame(game.get('id'))}
-                  >
+                <div onClick={()=>this.handleSelectedGame(game.get('id'))} >
                   <span>{game.getIn(['away', 'name'])}</span>
                   <span> @ </span>
                   <span>{game.getIn(['home', 'name'])},</span>
                   <span> Status: {game.get('status')}</span>
-                </Link>
-              </div>
+                </div>
               );
           }) : null
         }

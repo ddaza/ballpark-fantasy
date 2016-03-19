@@ -11,7 +11,7 @@ export default class Game extends React.Component {
                      code: query.code };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     if (this.state.name && this.state.code) {
       var sessionRef = new Firebase('https://ballparkfantasy.firebaseio.com/session').child(this.state.code);
       var userRef = sessionRef.child('users').child(this.state.name);
@@ -28,6 +28,7 @@ export default class Game extends React.Component {
           getGameSummary(dataSnapshot.val())
           .then((result) => {
             this.setState({ event: result});
+            this.forceUpdate();
           });
         }
       }.bind(this));
