@@ -4,6 +4,8 @@
     "comma-dangle": [2, "never"],
     "object-curly-spacing": 0,
     "no-else-return": 0,
-    "func-names": 0
+    "func-names": 0,
+    "arrow-body-style": 0,
+    "prefer-template": 0
   }
 }

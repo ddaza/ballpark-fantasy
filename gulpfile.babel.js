@@ -22,6 +22,7 @@ import imagemin from 'gulp-imagemin';
 import pngquant from 'imagemin-pngquant';
 import runSequence from 'run-sequence';
 import ghPages from 'gulp-gh-pages';
+import cors from './corsBS.js';
 
 const paths = {
   bundle: 'app.js',
@@ -71,6 +72,10 @@ gulp.task('watchify', () => {
   bundler.transform(babelify)
   .on('update', rebundle);
   return rebundle();
+});
+
+gulp.task('cors', () => {
+  cors();
 });
 
 gulp.task('browserify', () => {
@@ -128,7 +133,7 @@ gulp.task('deploy', () => {
 });
 
 gulp.task('watch', cb => {
-  runSequence('clean', ['browserSync', 'watchTask', 'watchify', 'styles', 'lint', 'images'], cb);
+  runSequence('clean', ['cors', 'browserSync', 'watchTask', 'watchify', 'styles', 'lint', 'images'], cb);
 });
 
 gulp.task('build', cb => {

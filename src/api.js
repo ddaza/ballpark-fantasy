@@ -3,7 +3,8 @@ import {fromJS, Iterable} from 'immutable';
 import {sportRadar} from '../apikeys.json';
 
 const timeout = 5000;  // 5 seconds
-const corsBS = 'https://crossorigin.me/';
+//const corsBS = 'https://crossorigin.me/';
+const corsBS = 'http://localhost:8080/';
 const sportRadarPath = `${corsBS}http://api.sportradar.us/mlb-t5`;
 
 function handleCall(resolve, reject) {
