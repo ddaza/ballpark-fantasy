@@ -37,7 +37,9 @@ export default class GameList extends React.Component {
 
     // Write session to the generated game code
     var sessionRef = rootRef.child('session').child(sessionCode);
-    var sessionValue = { 'users' : [this.state.name],
+    var names = {};
+    names[this.state.name] = true;
+    var sessionValue = { 'users' : names,
                          'eventId': eventId,
                          'started': 'false'};
     sessionRef.set(sessionValue);
@@ -48,6 +50,11 @@ export default class GameList extends React.Component {
   }
 
   render() {
+    if (!this.state.name) {
+      return (
+        <h3>Please log in to continue</h3>
+      )
+    }
     //TODO: this is a temporary fake button; generate game table from API response instead
     //onClick={this.handleSelectedGame.bind(this)}
     return (
