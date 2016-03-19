@@ -12,8 +12,7 @@ render(
   (<Router history={hashHistory}>
     <Route path="/" component={App}>
       <Route path="/about" component={About} />
-      <Route path="/game-list" component={PoweredBy} />
-      <Route path="/poweredby" component={PoweredBy} />
+      <Route path="/game-list" component={GameList} />
       <Route path="/login" component={Login} />
     </Route>
   </Router>), document.getElementById('content')
