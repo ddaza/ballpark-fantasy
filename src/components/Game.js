@@ -1,4 +1,5 @@
 import React from 'react';
+import {getGameSummary} from '../api';
 
 var Firebase = require('firebase');
 
@@ -24,7 +25,10 @@ export default class Game extends React.Component {
       var eventRef = sessionRef.child('eventId');
       eventRef.once('value', function(dataSnapshot) {
         if (dataSnapshot.exists()) {
-          this.setState({ event: dataSnapshot.val() });
+          getGameSummary(dataSnapshot.val())
+          .then((result) => {
+            this.setState({ event: result});
+          });
         }
       }.bind(this));
     }
@@ -33,7 +37,18 @@ export default class Game extends React.Component {
   render() {
     //TODO: render the game
     return (
-      <p>{this.state.event}</p>
+      <div>
+        <p>{ this.state.event ? this.state.event.getIn(['game', 'home', 'market']) : null} { this.state.event ? this.state.event.getIn(['game', 'home', 'name']) : null}</p>
+        { this.state.event ?
+          this.state.event.getIn(['game', 'home', 'players']).map((player) => {
+            return (
+              <div>
+                {player.get('first_name')} {player.get('last_name')}
+              </div>
+            );
+          }) : null
+        }
+      </div>
     );
   }
 }

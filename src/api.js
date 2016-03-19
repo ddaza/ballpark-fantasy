@@ -53,3 +53,8 @@ export function getGamesSchedules(date) {
   const path = `${sportRadarPath}/games/${date}/schedule.json?api_key=${sportRadar.apiKey}`;
   return get(path);
 }
+
+export function getGameSummary(eventId) {
+  const path = `${sportRadarPath}/games/${eventId}/summary.json?api_key=${sportRadar.apiKey}`;
+  return get(path);
+}
