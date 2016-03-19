@@ -51,6 +51,13 @@ export default class GameList extends React.Component {
   }
 
   render() {
+    if (!this.state.name) {
+      return (
+        <h3>Please log in to continue</h3>
+      )
+    }
+    //TODO: this is a temporary fake button; generate game table from API response instead
+    //onClick={this.handleSelectedGame.bind(this)}
     return (
       <div>
         <h2>Hello, {this.state.name}!</h2>
