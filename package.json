@@ -38,6 +38,7 @@
   },
   "homepage": "https://github.com/Granze/react-starterify",
   "dependencies": {
+    "firebase": "^2.4.1",
     "history": "^2.0.0",
     "immutable": "^3.7.6",
     "moment": "^2.12.0",
