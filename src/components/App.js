@@ -8,6 +8,7 @@ const App = ({ children }) => (
       <h1>React Starterify {version}</h1>
       <Link to="/about">About</Link>
       <Link to="/poweredby">Powered by</Link>
+      <Link to="/login">Login</Link>
     </header>
     <section>
       {children || 'Welcome to React Starterify'}
