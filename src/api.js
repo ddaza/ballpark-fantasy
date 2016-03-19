@@ -47,7 +47,7 @@ export function post(path, query) {
 }
 
 
-//http://api.sportradar.us/mlb-t5/games/2016/3/19/schedule.json?api_key=pcfhb22dmyvbphww2vkk6vd9
+//http://api.sportradar.us/mlb-t5/games/2016/3/19/schedule.json?api_key=key
 
 export function getGamesSchedules(date) {
   const path = `${sportRadarPath}/games/${date}/schedule.json?api_key=${sportRadar.apiKey}`;
