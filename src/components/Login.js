@@ -12,9 +12,8 @@ export default class Login extends React.Component {
     }
 
     handleSubmit(e) {
-        // e.preventDefault();
         var name = this.state.name.trim();
-        //TODO: how to transition to next page (game list) here?
+        window.location.hash = 'game_list?name=' + name;
     }
 
     render() {
