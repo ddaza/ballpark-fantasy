@@ -8,45 +8,49 @@ export default class GameList extends React.Component {
 
   constructor(context, props) {
     super(context, props);
-    let { query } = this.props.location;
-      this.state = {};
-    this.state = {games: '', code: '', name: query.name};
+    this.state = {};
+    this.state = {
+      games: '',
+      code: '',
+      name: ''
+    };
   }
 
   componentDidMount() {
     const today = moment().format('YYYY/MM/DD');
+    const {query} = this.props.location;
+    this.setState({name: query.name});
     getGamesSchedules(today)
     .then((result) => {
       this.setState({games: result});
     });
   }
 
-  handleSelectedGame(e) {
-    const element = e.target;
-    const eventId = element.name;
-
+  handleSelectedGame(eventId) {
     // Get reference to firebase
-    var rootRef = new Firebase('https://ballparkfantasy.firebaseio.com');
+    const rootRef = new Firebase('https://ballparkfantasy.firebaseio.com');
 
     // Generate a game code by truncating an auto id to 6 characters
-    var sessionCode = '';
-    while (sessionCode.length == 0 || sessionCode.indexOf('-') >= 0) {
+         // Write session to the generated game code
+    let names = {};
+    names[this.state.name] = true;
+    let sessionCode = '';
+    while (sessionCode.length === 0 || sessionCode.indexOf('-') >= 0) {
       sessionCode = rootRef.child('session').push().key();
-      sessionCode = sessionCode.substring(1,7).toUpperCase();
+      sessionCode = sessionCode.substring(1, 7).toUpperCase();
     }
 
     // Write session to the generated game code
-    var sessionRef = rootRef.child('session').child(sessionCode);
-    var names = {};
-    names[this.state.name] = true;
-    var sessionValue = { 'users' : names,
-                         'eventId': eventId,
-                         'started': 'false'};
+    const sessionRef = rootRef.child('session').child(sessionCode);
+    const sessionValue = {
+      users: names,
+      eventId: eventId,
+      started: 'false'
+    };
     sessionRef.set(sessionValue);
 
     // Go to the game page
     window.location.hash = 'game?eventId=' + eventId + '&name=' + this.state.name;
-    e.preventDefault();
   }
 
   render() {
@@ -63,17 +67,19 @@ export default class GameList extends React.Component {
         <p>Which game are you watching?</p>
         { this.state.games ?
           this.state.games.getIn(['league', 'games']).map((game) => {
+            if (game.get('status') === 'canceled') { return null; }
             return (
               <div>
-
-                <Link to='/game?tobeadded=true'>
+                <Link to="/game?tobeadded=true"
+                  onClick={()=>this.handleSelectedGame(game.get('id'))}
+                  >
                   <span>{game.getIn(['away', 'name'])}</span>
                   <span> @ </span>
                   <span>{game.getIn(['home', 'name'])},</span>
                   <span> Status: {game.get('status')}</span>
                 </Link>
               </div>
-            );
+              );
           }) : null
         }
       </div>
