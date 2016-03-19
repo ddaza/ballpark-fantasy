@@ -1,0 +1,7 @@
+{
+  "sportRadar": {
+    "apiKey" : "key",
+    "applicationName": "app",
+    "userNAme": "username"
+  }
+}

@@ -1,18 +1,30 @@
 import React from 'react';
-
-var Firebase = require('firebase');
+import {getGamesSchedules} from '../api';
+import moment from 'moment';
+import {Link} from 'react-router';
+import Firebase from 'firebase';
 
 export default class GameList extends React.Component {
-  constructor(props) {
-      super(props);
-      let { query } = this.props.location;
-      this.state = {name: query.name};
+
+  constructor(context, props) {
+    super(context, props);
+    let { query } = this.props.location;
+      this.state = {};
+    this.state = {games: '', code: '', name: query.name};
+  }
+
+  componentDidMount() {
+    const today = moment().format('YYYY/MM/DD');
+    getGamesSchedules(today)
+    .then((result) => {
+      this.setState({games: result});
+    });
   }
 
   handleSelectedGame(e) {
     const element = e.target;
     const eventId = element.name;
-    
+
     // Get reference to firebase
     var rootRef = new Firebase('https://ballparkfantasy.firebaseio.com');
 
@@ -37,16 +49,26 @@ export default class GameList extends React.Component {
 
   render() {
     //TODO: this is a temporary fake button; generate game table from API response instead
+    //onClick={this.handleSelectedGame.bind(this)}
     return (
       <div>
         <h2>Hello, {this.state.name}!</h2>
         <p>Which game are you watching?</p>
-        <input
-          type='button'
-          name='eventId1'
-          value='CIN @ CHC'
-          onClick={this.handleSelectedGame.bind(this)}
-        />
+        { this.state.games ?
+          this.state.games.getIn(['league', 'games']).map((game) => {
+            return (
+              <div>
+
+                <Link to='/game?tobeadded=true'>
+                  <span>{game.getIn(['away', 'name'])}</span>
+                  <span> @ </span>
+                  <span>{game.getIn(['home', 'name'])},</span>
+                  <span> Status: {game.get('status')}</span>
+                </Link>
+              </div>
+            );
+          }) : null
+        }
       </div>
     );
   }
