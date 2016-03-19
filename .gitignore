@@ -5,6 +5,7 @@ dist
 .publish
 .DS_Store
 .DS_Store?
+npm-debug.log
 *.swp
 ._*
 .Spotlight-V100
