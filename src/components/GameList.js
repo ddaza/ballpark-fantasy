@@ -31,6 +31,9 @@ export default class GameList extends React.Component {
     const rootRef = new Firebase('https://ballparkfantasy.firebaseio.com');
 
     // Generate a game code by truncating an auto id to 6 characters
+         // Write session to the generated game code
+    let names = {};
+    names[this.state.name] = true;
     let sessionCode = '';
     while (sessionCode.length === 0 || sessionCode.indexOf('-') >= 0) {
       sessionCode = rootRef.child('session').push().key();
@@ -40,7 +43,7 @@ export default class GameList extends React.Component {
     // Write session to the generated game code
     const sessionRef = rootRef.child('session').child(sessionCode);
     const sessionValue = {
-      users: [this.state.name],
+      users: names,
       eventId: eventId,
       started: 'false'
     };

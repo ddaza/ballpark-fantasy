@@ -19,7 +19,6 @@ function handleCall(resolve, reject) {
 }
 
 function handleImmutableQuery(query) {
-  console.log('querry!!!', query);
   if (Iterable.isIterable(query)) {
     return query.toJS();
   } else {
