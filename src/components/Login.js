@@ -25,7 +25,7 @@ export default class Login extends React.Component {
         if (code) {
             window.location.hash = 'game?name=' + name + '&code=' + code;
         } else {
-            window.location.hash = 'game_list?name=' + name;
+            window.location.hash = 'game-list?name=' + name;
         }
     }
 
